@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Website Title</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            color: #555;
+        }
+        footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+        #chess-board {
+            width: 200px;
+            height: 200px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Your Website</h1>
+        <p>Current Time in IST: <span id="IST-time"></span></p>
+        <p>Current Weather: <span id="weather"></span></p>
+    </header>
+    <div class="container">
+        <h2>Chess News</h2>
+        <p>Here you can display the latest chess news.</p>
+        <p>Feel free to add any other content you'd like!</p>
+    </div>
+    <footer>
+        <p>&copy; 2024 Your Website. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function updateISTTime() {
+            var now = new Date();
+            var options = { timeZone: 'Asia/Kolkata' };
+            var ISTTime = now.toLocaleTimeString('en-US', options);
+            document.getElementById('IST-time').textContent = ISTTime;
+        }
+
+        setInterval(updateISTTime, 1000);
+
+        // Fetch weather data
+        fetch('https://api.openweathermap.org/data/2.5/weather?q=YOUR_CITY_NAME&appid=YOUR_API_KEY')
+            .then(response => response.json())
+            .then(data => {
+                const weather = data.weather[0].description;
+                document.getElementById('weather').textContent = weather;
+            })
+            .catch(error => console.log('Error fetching weather data:', error));
+    </script>
+
+    <!-- Chess Board -->
+    <div id="chess-board"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chessboardjs/1.0.0/chessboard-0.3.0.min.js"></script>
+    <script>
+        var board = ChessBoard('chess-board', 'start');
+    </script>
+</body>
+</html>
